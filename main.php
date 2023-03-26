@@ -33,6 +33,7 @@
             margin-top: 25px;
             border-radius: 25px;
         }
+        
         .welcome{
             font-size: 23px;
             padding-left: 20%;
@@ -144,6 +145,10 @@
             }
         ?>
         </div>
-        <script src="ajax.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+
+        </script>
+
 </body>
 </html>
