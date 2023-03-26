@@ -5,12 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hehe czat</title>
+    
     <style>
         .nav_bar{
             height: 4rem;
             background-color: rgb(31, 31, 153);
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            border-radius: 20px;
+            box-shadow: 10px 5px 5px grey;
+        }
+        .nav_bar > h2{
+            color: whitesmoke;
         }
         .left_container{
             float: left;
@@ -42,17 +48,28 @@
             list-style: none;
             padding-left: 0;
         }
+        .button5 {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+            height: 20px
+          }
+          
+        .button5:hover {
+            background-color: #555555;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="nav_bar">
-        <form action="logout.php" class="logoutButton">
-            <button type="submit" id="logoutButton">Logout</button>
-        </form>
+        <h2>SimpleChat</h2>
         <form>
-            <button>My account</button>
-            <button>Cost tam</button>
-            <button>Cos tam2</button>
+            <button class = "button5">My account</button>
+            <button class = "button5">Cost tam</button>
+        </form>
+        <form action="logout.php">
+            <button type="submit" id="logoutButton" class="button5">Logout</button>
         </form>
     </div>
     <div class = "left_container">
@@ -117,7 +134,7 @@
             <?php if (isset($_GET['recipient_id'])) { ?>
                 <form method="post" action="">
                     <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
-                    <textarea name="message"></textarea>
+                    <textarea name="message" required></textarea>
                     <button type="submit" name="send">Wyślij</button>
                 </form>
             <?php } ?>
