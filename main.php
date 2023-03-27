@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hehe czat</title>
+    <title>SimpleChat</title>
     
     <style>
         .nav_bar{
@@ -12,11 +12,22 @@
             background-color: rgb(31, 31, 153);
             display: flex;
             justify-content: space-between;
+            align-items: center;
             border-radius: 20px;
             box-shadow: 10px 5px 5px grey;
-        }
+        }   
         .nav_bar > h2{
+            display: flex;
+            align-items: center;
+            height: 100%;
             color: whitesmoke;
+        }
+        .nav_bar > .navbuttons{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            margin-right: 10px;
+            
         }
         .left_container{
             float: left;
@@ -49,28 +60,31 @@
             padding-left: 0;
         }
         .button5 {
-            background-color: white;
-            color: black;
-            border: 2px solid #555555;
-            height: 20px
+            cursor: pointer;
+            border:1px solid transparent;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42;
+            color:white;
+            border-radius: 4px;
+            background-color: #1a73e8;
+            outline: none;
+            min-width: 88px;
           }
-          
-        .button5:hover {
-            background-color: #555555;
-            color: white;
-        }
+
     </style>
 </head>
 <body>
     <div class="nav_bar">
         <h2>SimpleChat</h2>
-        <form>
-            <button class = "button5">My account</button>
-            <button class = "button5">Cost tam</button>
-        </form>
-        <form action="logout.php">
-            <button type="submit" id="logoutButton" class="button5">Logout</button>
-        </form>
+        <div class="navbuttons">
+            <form class = "navbuttons">
+                <button class = "button5" style="margin-right: 10px;">My account</button>
+            </form>
+            <form action="logout.php" class = "navbuttons">
+                <button type="submit" id="logoutButton" class="button5">Logout</button>
+            </form>
+        </div>
     </div>
     <div class = "left_container">
         <?php  
@@ -98,13 +112,18 @@
                     
                 <?php
                 // pobierz informacje o rozmówcy
-                $recipient_id = mysqli_real_escape_string($conn, $_GET['recipient_id']);
-                $query = "SELECT * FROM users WHERE id = $recipient_id";
-                $result = mysqli_query($conn, $query);
-                $recipient = mysqli_fetch_assoc($result);
-                
+                if (isset($_GET['recipient_id'])) {
+                    $recipient_id = mysqli_real_escape_string($conn, $_GET['recipient_id']);
+                    $query = "SELECT * FROM users WHERE id = $recipient_id";
+                    $result = mysqli_query($conn, $query);
+                    $recipient = mysqli_fetch_assoc($result);
+                  }
                 // wyświetl nagłówek z informacją o rozmówcy
-                echo "<h2>Rozmowa z " . $recipient['username'] . "</h2>";
+                if (isset($recipient)) {
+                    echo "<h2>Rozmowa z " . $recipient['username'] . "</h2>";
+                } else {
+                    echo "<h2>Wybierz uzytkownika, z ktorym chcesz rozpoczac konwersacje</h2>";
+                }
                 ?>
             <!-- Wyświetlanie wiadomości -->
             <div id="messages-container">
@@ -125,8 +144,6 @@
                         } else {
                             echo "<p>Rozpocznij nową konwersację.</p>";
                         }
-                    } else {
-                        echo "<p>Wybierz użytkownika, aby rozpocząć konwersację.</p>";
                     }
                 ?>
             </div>

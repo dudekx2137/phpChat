@@ -2,7 +2,7 @@
    
     require_once'connect.php';
     
-     
+    error_reporting(~E_WARNING); 
     $conn = @mysqli_connect($host, $db_user, $db_password, $db_name);
     if (mysqli_connect_errno()!=0)
     {
