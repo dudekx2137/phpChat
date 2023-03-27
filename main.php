@@ -111,14 +111,14 @@
     <div class="right_container">
                     
                 <?php
-                // pobierz informacje o rozmówcy
+                // info o rozmowcy
                 if (isset($_GET['recipient_id'])) {
                     $recipient_id = mysqli_real_escape_string($conn, $_GET['recipient_id']);
                     $query = "SELECT * FROM users WHERE id = $recipient_id";
                     $result = mysqli_query($conn, $query);
                     $recipient = mysqli_fetch_assoc($result);
                   }
-                // wyświetl nagłówek z informacją o rozmówcy
+                // naglowek z info o rozmowcy
                 if (isset($recipient)) {
                     echo "<h2>Rozmowa z " . $recipient['username'] . "</h2>";
                 } else {
