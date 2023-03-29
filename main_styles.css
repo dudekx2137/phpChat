@@ -78,10 +78,9 @@ body{
                     -o-transition: background-color 1.25s ease-out;
                     transition: background-color 1.25s ease-out;
             }
-            .user_list:hover{
+            .highlighted {
                 background-color: #151922;
                 color: white;
-                
             }
             
             .user_list > p{

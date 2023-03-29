@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimpleChat</title>
     <link rel="stylesheet" href="main_styles.css">
-    
-    <style>
-
-    </style>
 </head>
 <body>
     <div class="main_container">
@@ -34,7 +30,7 @@
                         while ($row = mysqli_fetch_assoc($result)) {
 
                             echo "<a style='text-decoration: none; color: black' href='main.php?recipient_id=" . $row['id'] . "'>";
-                                echo '<div class = "user_list">';
+                                echo '<div class = "user_list" data-user-id="' . $row['id'] . '">';
                                     echo '<img src="' . $row['avatar_path'] . '" class = "mini_avatar"/>';
                                     echo '<p>' . $row['username'] . '</p>';
                                 echo '</div>';
@@ -130,8 +126,7 @@
         <div class="right_container">
             <?php
                 
-                 //Dodawanie/wyswietlanie avataru uzytkownika
-                 //id zalogowanego uzytkownika
+                
                 $user_id = $_SESSION['id'];
                 //sprawdza czy przeslano plik z awatarem
                 if(isset($_FILES['avatar'])){
@@ -196,7 +191,7 @@
         </div>
     </div>
     <div class="footer">
-        <p class="footertext">Site made by dudek</p>
+        <!--<p class="footertext">Site made by dudek</p>-->
     </div>
     <script>
             //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
@@ -218,6 +213,48 @@
                     buttons[i].style.display = "none";
                 }
             }
+            //zmiana koloru aktualnie wybranego usera
+            const urlParam = new URLSearchParams(window.location.search);
+            const recipientId = urlParam.get('recipient_id');
+
+            const selectedUsers = document.querySelectorAll('.user_list');
+
+            for(let i = 0; i < selectedUsers.length; i++){
+                const selectedUser = selectedUsers[i];
+                const userId = selectedUser.dataset.userId;
+
+                if(recipientId && userId == recipientId){
+                    selectedUser.style.backgroundColor = "#151922";
+                    selectedUser.style.color = "white";
+                } else if(selectedUser.classList.contains('hovered')){
+                    selectedUser.style.backgroundColor = "#151922";
+                    selectedUser.style.color = "white";
+                } else {
+                    selectedUser.style.backgroundColor = "#ffd966";
+                    selectedUser.style.color = "#151922";
+                }
+
+                selectedUser.addEventListener('click', () => {
+                    window.location.href = `main.php?recipient_id=${userId}`;
+                });
+
+                selectedUser.addEventListener('mouseover', () => {
+                    selectedUser.classList.add('hovered');
+                    if(!recipientId || userId != recipientId){
+                        selectedUser.style.backgroundColor = "#151922";
+                        selectedUser.style.color = "white";
+                    }
+                });
+
+                selectedUser.addEventListener('mouseout', () => {
+                    selectedUser.classList.remove('hovered');
+                    if(!recipientId || userId != recipientId){
+                        selectedUser.style.backgroundColor = "#ffd966";
+                        selectedUser.style.color = "#151922";
+                    }
+                });
+            }
+
     </script>
 
 </body>
