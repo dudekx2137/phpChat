@@ -5,129 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimpleChat</title>
+    <link rel="stylesheet" href="main_styles.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital@0;1&display=swap');
-        body{
-            background-color: #151922;
-            font-family: 'DM Sans', sans-serif;
-        }
-        .main_container{
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .main_container > * {
-            margin: 10px;
-        }
-        .left_container{
-            padding: 10px;
-            background-color:   #ffd966;
-           
-            border-radius: 25px;
-            flex-basis: 25%;
-            box-shadow: 0 0 10px 2px rgba(255, 217, 102, 0.8);
-        }
-        .search-container {
-            display: inline-block;
-            position: relative;
-            margin: 20px;
-            height: 40px;
-            width: 300px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
 
-        .search-container input[type="text"] {
-            width: calc(100% - 40px);
-            height: 100%;
-            padding: 0 20px;
-            border: none;
-            font-size: 16px;
-            background-color: #f2f2f2;
-            outline: none;
-        }
-
-        .search-container button[type="submit"] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 40px;
-            border: none;
-            border-radius: 0 20px 20px 0;
-            font-size: 16px;
-            color: #fff;
-            background-color: #e6bf00;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-            background: linear-gradient(to bottom, #ffd966, #ffa500);
-        }
-
-        .search-container button[type="submit"]:hover {
-            background: linear-gradient(to bottom, #ffa500, #ffd966);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-        }
-        .search-container button[type"submit"]::placeholder {
-            color: #fff;
-        }
-        .search-container button[type"submit"]:focus  {
-            outline: none;
-        box-shadow: 0 0 2px 2px rgba(255, 217, 102, 0.8);
-        }
-
-        .middle_container{
-            background-color: #ffffff;
-            border-radius: 25px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            flex-basis: 45%;
-            box-shadow: 0 0 10px 2px rgba(200, 200, 200, 0.8);
-        }
-        .right_container{
-            padding: 10px;
-            background-color: #ffd966  ;
-            
-            border-radius: 25px;
-            flex-basis: 20%;
-            justify-content: center;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 10px 2px rgba(255, 217, 102, 0.8);
-        }
-        .welcome{
-            text-align: center;
-            font-size: 23px;
-            
-        }
-        .users_list{
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .avatar{
-            
-            border-radius: 50%;
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
-            object-position: 50% 50%;
-        }
-        .avatarbutton{
-            margin-top: auto;
-            display:none;
-        }
-        @media (max-width: 768px) {
-            .main_container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .main_container > * {
-                flex: 1 1 auto;
-                margin: 10px 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -142,7 +23,7 @@
             </div>
             <br>
             <!-- lista użytkowników -->
-            <ul>
+            
                 <?php
                 
                     include'connect.php';
@@ -151,11 +32,14 @@
                     $result = mysqli_query($conn, $query);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<li><a href='main.php?recipient_id=" . $row['id'] . "'>" . $row['username'] . "</a></li>";
+                            echo '<div class = "user_list">';
+                                echo '<img src="' . $row['avatar_path'] . '" alt = "miniavatar" class = "mini_avatar"/>';
+                                echo "<a href='main.php?recipient_id=" . $row['id'] . "'>" . $row['username'] . "</a>";
+                            echo '</div>';
                         }
                     }
                 ?>
-            </ul>
+            
         </div>
         <div class="middle_container">             
             <?php

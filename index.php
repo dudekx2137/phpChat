@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimpleChat</title>
+    <link rel="stylesheet" href="index_styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital@0;1&display=swap');
         body{
-           background-color: #151922;
-            font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+            background-color: #151922;
+            font-family: 'DM Sans', sans-serif;
         }
         .maind{
-            background-color: white;
+            background-color:   #ffd966;
             position: absolute;
             top: 50%;
             left:50%;
@@ -22,7 +24,7 @@
             border-radius:0.5rem;
             border:1px solid wheat;
             text-align: center;
-            box-shadow: 0 0 10px 2px rgba(200, 200, 200, 0.8);
+            box-shadow: 0 0 10px 2px rgba(30, 0, 0, 0.67);
         }
         .maind .fields{
             
@@ -30,9 +32,9 @@
             height: 90px;
             position: relative;
         }
-        h1{
+        h2{
            
-            padding-top: 70px;
+            padding-top: 30px;
             font-size: 24px;
             font-weight: 400px;
         }
@@ -56,7 +58,8 @@
 </head>
 <body>
     <div class="maind">
-        <h1 class="signregi">Sign in</h1>
+        <h1 class="appname">Simple Chat</h1>
+        <h2 class="signregi">Sign in</h2>
         <div class="inputs">
             <div class="fields">
                 <div class="fieldset">
