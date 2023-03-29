@@ -32,10 +32,15 @@
                     $result = mysqli_query($conn, $query);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo '<div class = "user_list">';
-                                echo '<img src="' . $row['avatar_path'] . '" alt = "miniavatar" class = "mini_avatar"/>';
-                                echo "<a href='main.php?recipient_id=" . $row['id'] . "'>" . $row['username'] . "</a>";
-                            echo '</div>';
+
+                            echo "<a style='text-decoration: none; color: black' href='main.php?recipient_id=" . $row['id'] . "'>";
+                                echo '<div class = "user_list">';
+                                    echo '<img src="' . $row['avatar_path'] . '" class = "mini_avatar"/>';
+                                    echo '<p>' . $row['username'] . '</p>';
+                                echo '</div>';
+                            echo "</a>";
+
+
                         }
                     }
                 ?>
@@ -81,11 +86,13 @@
             </div>
             <!-- Formularz do wysyłania wiadomości -->
             <?php if (isset($_GET['recipient_id'])) { ?>
-                <form method="post" action="">
-                    <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
-                    <textarea name="message" required></textarea>
-                    <button type="submit" name="send">Wyślij</button>
-                </form>
+                <div class="tareadiv">
+                    <form method="post" action="">
+                        <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
+                        <textarea name="message" required></textarea>
+                        <button type="submit" name="send">Wyślij</button>
+                    </form>
+                </div>
             <?php } ?>
 
             <?php
@@ -185,8 +192,11 @@
                     <button type="submit" id="logoutButton" class="button5">Logout</button>
                 </form>
             </div>
-            <h2>here goes information about logged user </h2>
+            <h2>tu dac cos o aktualnie zalogowanym uzytkowniku</h2>
         </div>
+    </div>
+    <div class="footer">
+        <p class="footertext">Site made by dudek</p>
     </div>
     <script>
             //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika

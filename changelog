@@ -3,11 +3,11 @@ added is_user_logged.php that will check if user is logged, and if its not it wi
 ok, so login and register form works fine, time for further steps
 ok, for now simple chat is done,
 i've edited login page
-I managed to fix the bug that caused duplicate messages after refreshing the page
 
  
  
 todo: 
 -implement ajax;
--make site responsive(for now it is but thats not what i want);
+-make site responsive;
 -make some visual upgrades;
+-still i need to make visual upgrades cuz its awful
