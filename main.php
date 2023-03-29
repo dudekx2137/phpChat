@@ -7,6 +7,11 @@
     <title>SimpleChat</title>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital@0;1&display=swap');
+        body{
+            background-color: #151922;
+            font-family: 'DM Sans', sans-serif;
+        }
         .main_container{
             display: flex;
             flex-wrap: wrap;
@@ -16,28 +21,80 @@
         }
         .left_container{
             padding: 10px;
-            background-color: #ff00ff;
-            box-shadow: 10px 5px 5px grey;
+            background-color:   #ffd966;
+           
             border-radius: 25px;
             flex-basis: 25%;
+            box-shadow: 0 0 10px 2px rgba(255, 217, 102, 0.8);
         }
-        .middle_container{
-            padding: 10px;
+        .search-container {
+            display: inline-block;
+            position: relative;
+            margin: 20px;
+            height: 40px;
+            width: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .search-container input[type="text"] {
+            width: calc(100% - 40px);
+            height: 100%;
+            padding: 0 20px;
+            border: none;
+            font-size: 16px;
             background-color: #f2f2f2;
-            box-shadow: 10px 5px 5px grey;
+            outline: none;
+        }
+
+        .search-container button[type="submit"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 40px;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: #e6bf00;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            background: linear-gradient(to bottom, #ffd966, #ffa500);
+        }
+
+        .search-container button[type="submit"]:hover {
+            background: linear-gradient(to bottom, #ffa500, #ffd966);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+        }
+        .search-container button[type"submit"]::placeholder {
+            color: #fff;
+        }
+        .search-container button[type"submit"]:focus  {
+            outline: none;
+        box-shadow: 0 0 2px 2px rgba(255, 217, 102, 0.8);
+        }
+
+        .middle_container{
+            background-color: #ffffff;
             border-radius: 25px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 10px;
             flex-basis: 45%;
+            box-shadow: 0 0 10px 2px rgba(200, 200, 200, 0.8);
         }
         .right_container{
-        padding: 10px;
-        background-color: #ff00ff;
-        box-shadow: 10px 5px 5px grey;
-        border-radius: 25px;
-        flex-basis: 20%;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
+            padding: 10px;
+            background-color: #ffd966  ;
+            
+            border-radius: 25px;
+            flex-basis: 20%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px 2px rgba(255, 217, 102, 0.8);
         }
         .welcome{
             text-align: center;
@@ -51,6 +108,7 @@
 
         .avatar{
             
+            border-radius: 50%;
             width: 180px;
             height: 180px;
             object-fit: cover;
@@ -58,6 +116,7 @@
         }
         .avatarbutton{
             margin-top: auto;
+            display:none;
         }
         @media (max-width: 768px) {
             .main_container {
@@ -77,10 +136,15 @@
             <?php  
                 include'is_user_logged.php';
             ?>
-            <p>Available users:</p><br>
+            <div class="search-container">
+                <input type="text" placeholder="Wyszukaj użytkownika...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+            <br>
             <!-- lista użytkowników -->
             <ul>
                 <?php
+                
                     include'connect.php';
                     $conn = @mysqli_connect($host, $db_user, $db_password, $db_name);
                     $query = "SELECT * FROM users";
@@ -92,14 +156,6 @@
                     }
                 ?>
             </ul>
-            <div class="navbuttons">
-                <form class = "navbuttons">
-                    <button class = "button5" style="margin-right: 10px;">My account</button>
-                </form>
-                <form action="logout.php" class = "navbuttons">
-                    <button type="submit" id="logoutButton" class="button5">Logout</button>
-                </form>
-            </div>
         </div>
         <div class="middle_container">             
             <?php
@@ -149,31 +205,40 @@
             <?php } ?>
 
             <?php
-                // Obsługa wysyłania wiadomości
-                if (isset($_POST['send'])) {
-                    $sender_id = $_SESSION['id'];
-                    $query = "INSERT INTO conversations (user1_id, user2_id) VALUES ($sender_id, $recipient_id)";
-                    $result = mysqli_query($conn, $query);
-                    $conversation_id = mysqli_insert_id($conn);
-                    $recipient_id = mysqli_real_escape_string($conn, $_POST['recipient_id']);
-                    $message = mysqli_real_escape_string($conn, $_POST['message']);
-                    $sender_id = $_SESSION['id'];
-                    $query2 = "INSERT INTO messages (conversation_id, sender_id, receiver_id, message) 
-                            VALUES ( $conversation_id, $sender_id, $recipient_id, '$message')";
-                    $result2 = mysqli_query($conn, $query2);
-                    if ($result2) {
-                        header("Refresh:0");
-                    
+// Obsługa wysyłania wiadomości
+                    if (isset($_POST['send'])) {
+                        $recipient_id = mysqli_real_escape_string($conn, $_POST['recipient_id']);
+                        $message = mysqli_real_escape_string($conn, $_POST['message']);
+                        $sender_id = $_SESSION['id'];
+                        $query = "SELECT id FROM conversations WHERE (user1_id=$sender_id AND user2_id=$recipient_id) OR (user1_id=$recipient_id AND user2_id=$sender_id)";
+                        $result = mysqli_query($conn, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            $row = mysqli_fetch_assoc($result);
+                            $conversation_id = $row['id'];
+                        } else {
+                            $query = "INSERT INTO conversations (user1_id, user2_id) VALUES ($sender_id, $recipient_id)";
+                            $result = mysqli_query($conn, $query);
+                            $conversation_id = mysqli_insert_id($conn);
+                        }
+                        $query2 = "SELECT id FROM messages WHERE conversation_id=$conversation_id AND sender_id=$sender_id AND receiver_id=$recipient_id AND message='$message' AND created_at=NOW()";
+                        $result2 = mysqli_query($conn, $query2);
+                        if (mysqli_num_rows($result2) == 0) {
+                            $query3 = "INSERT INTO messages (conversation_id, sender_id, receiver_id, message, created_at) 
+                                    VALUES ( $conversation_id, $sender_id, $recipient_id, '$message', NOW())";
+                            $result3 = mysqli_query($conn, $query3);
+                            if ($result3) {
+                                header("Refresh:0");
+                            } else {
+                                echo "<p>Błąd podczas wysyłania wiadomości.</p>";
+                            }
+                        }
                     }
-                    else {
-                        echo "<p>Błąd podczas wysyłania wiadomości.</p>";
-                    }
-                }
+                
             ?>
         </div>
         <div class="right_container">
             <?php
-                echo "<h2 class = 'welcome'>Witaj " . $_SESSION['username2'] . "</h2>";
+                
                  //Dodawanie/wyswietlanie avataru uzytkownika
                  //id zalogowanego uzytkownika
                 $user_id = $_SESSION['id'];
@@ -202,7 +267,7 @@
                     }
                 }
                 //pobranie sciezki do pliku z bazy
-
+                echo "<h2 class = 'welcome'>Witaj " . $_SESSION['username2'] . "</h2>"; 
                 $stmt = $conn->prepare("SELECT avatar_path FROM users WHERE id = ?");
                 $stmt->bind_param('i', $user_id);
                 $stmt->execute();
@@ -213,26 +278,53 @@
                 if($avatar_path){
                     echo '<img src="' . $avatar_path . '" alt = "Avatar" class = "avatar"/>';
                 }else{
-                    echo "Możesz dodać swój awatar!";
+                    echo "Możesz dodać swój awatar!";  
+                    
+            
+    
                 }
-                    echo '<form action="" method="post" enctype="multipart/form-data">';
-                    echo '<input type="file" name="avatar" class = "avatarbutton" />';
-                    echo '<input type="submit" value="Zapisz avatar" class="avatarbutton" id="submit-button" disabled />';
-                    echo '</form>';
+                        echo '<form action="" method="post" enctype="multipart/form-data">';
+                            echo '<input type="file" name="avatar" class = "avatarbutton" />';
+                            echo '<input type="submit" value="Zapisz" class="avatarbutton" id="submit-button" disabled onclick = "hidebutt()"/>';
+                        echo '</form>';
+                    
             ?>
-            <script>
-                //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
-                const fileInput = document.querySelector('input[type="file"]');
-                const submitButton = document.getElementById('submit-button');
-
-                fileInput.addEventListener('change', () => {
-                submitButton.removeAttribute('disabled');
-                });
-            </script>
+            <button class = "show_avatar_buttons" onclick = "showbutt()">Zmien awatar</button>
+            <?php
 
             
+            ?>
+            <div class="navbuttons">
+                <form class = "navbuttons">
+                    </form>
+                    <form action="logout.php" class = "navbuttons">
+                    <button type="submit" id="logoutButton" class="button5">Logout</button>
+                </form>
+            </div>
             <h2>here goes information about logged user </h2>
         </div>
     </div>
+    <script>
+            //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
+            const fileInput = document.querySelector('input[type="file"]');
+            const submitButton = document.getElementById('submit-button');
+            fileInput.addEventListener('change', () => {
+            submitButton.removeAttribute('disabled');
+            });
+            //pokazywanie/ukrywanie przyciskow do zmieniania badz dodawania avatara
+            function showbutt() {
+                var buttons = document.getElementsByClassName("avatarbutton");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].style.display = "block";
+                }
+            }
+            function hidebutt(){
+                var buttons = document.getElementsByclassName("avatarbutton");
+                for(var i = 0; i < buttons.length; i++){
+                    buttons[i].style.display = "none";
+                }
+            }
+    </script>
+
 </body>
 </html>

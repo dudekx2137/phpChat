@@ -7,7 +7,7 @@
     <title>SimpleChat</title>
     <style>
         body{
-           background-color: #D0D1D2;
+           background-color: #151922;
             font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
         }
         .maind{
@@ -22,6 +22,7 @@
             border-radius:0.5rem;
             border:1px solid wheat;
             text-align: center;
+            box-shadow: 0 0 10px 2px rgba(200, 200, 200, 0.8);
         }
         .maind .fields{
             
