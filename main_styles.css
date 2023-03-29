@@ -9,11 +9,12 @@ body{
 }
 .main_container > * {
     margin: 10px;
+    height: 90vh;
 }
 .left_container{
     padding: 10px;
     background-color:   #ffd966;
-   
+    
     border-radius: 25px;
     flex-basis: 25%;
     box-shadow: 0 0 10px 2px rgba(30, 0, 0, 0.67);
@@ -101,9 +102,42 @@ body{
     padding: 10px;
     flex-basis: 45%;
     box-shadow: 0 0 10px 2px rgba(30, 0, 0, 0.67);
-    position:relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    
+    max-height: 90vh;
 }
-
+            #messages-container {
+                
+                height: calc(100% - 40px);
+                overflow-y: scroll;
+            }
+            textarea {
+                border-radius: 5px;
+                resize: none;
+                height: 50px;
+                width: 100%;
+                box-sizing: border-box;
+                border: none;
+                border-top: 1px solid #ccc;
+                padding: 10px;
+                font-size: 16px;
+              }
+              .send_button {
+                height: 50px;
+                width: 100%;
+                background-color: #ffd966;
+                color: #151922;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 5px;
+              }
+              
+              .send_button:hover {
+                background-color: #ffa500 ;
+              }
 
 .right_container{
     padding: 10px;

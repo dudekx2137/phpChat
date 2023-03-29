@@ -86,7 +86,7 @@
                     <form method="post" action="">
                         <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
                         <textarea name="message" required></textarea>
-                        <button type="submit" name="send">Wyślij</button>
+                        <button type="submit" name="send" class="send_button">Wyślij</button>
                     </form>
                 </div>
             <?php } ?>
@@ -126,7 +126,8 @@
         <div class="right_container">
             <?php
                 
-                
+                 //Dodawanie/wyswietlanie avataru uzytkownika
+                 //id zalogowanego uzytkownika
                 $user_id = $_SESSION['id'];
                 //sprawdza czy przeslano plik z awatarem
                 if(isset($_FILES['avatar'])){
