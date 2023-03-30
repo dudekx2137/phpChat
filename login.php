@@ -17,22 +17,15 @@
         $row = mysqli_fetch_assoc($result);
         if($row['login'] == $login && $row['password'] == $password){
             session_start(); 
-            
             $_SESSION['username'] = $row['login'];
             $_SESSION['password'] = $row['password'];
             $_SESSION['username2'] = $row['username'];
             $_SESSION['id'] = $row['id'];
-            header('Location: main.php');
+            echo 'success';
+            
 
         }else{
-            ?>
-            <script>
-            setTimeout(function(){
-            alert("Wprowadziłeś złe dane");
-            window.location.href = "index.php";
-            },500);
-            </script>
-            <?php
+            echo 'error';
         }
     }
 

@@ -16,86 +16,30 @@
             $result = mysqli_query($conn, "SELECT login from users where login = '$login'");
             $result2 = mysqli_query($conn, "SELECT email from users where email = '$email'");
             if(mysqli_num_rows($result) > 0){
-            ?>
-            <script>
-                setTimeout(function(){
-                alert("Istnieje użytkownik z takim samym loginem!");
-                window.location.href = "index.php";
-                },500);
-            </script>
-            <?php
-                
+                echo 'same_login';         
             }elseif(mysqli_num_rows($result2) > 0 ){
-                ?>
-                <script>
-                    setTimeout(function(){
-                    alert("Istnieje użytkownik z takim samym emailem!");
-                    window.location.href = "index.php";
-                    },1000);    
-                </script>
-                <?php
+                echo 'same_email';
             }elseif($login == ""){
-                ?>
-                <script>
-                    setTimeout(function(){
-                    alert("Prosze wprowadzić login!");
-                    window.location.href = "index.php";
-                    },1000);  
-                </script>
-                <?php
+                echo 'blank_login';
             }elseif($username == ""){
-                ?>
-                <script>
-                    setTimeout(function(){
-                    alert("Prosze wprowadzić nazwe uzytkownika!");
-                    window.location.href = "index.php";
-                    },1000);  
-                </script>
-                <?php
+                echo 'blank_username';
             }elseif($password == ""){
-                ?>
-                <script>
-                    setTimeout(function(){
-                    alert("Prosze wprowadzić haslo");
-                    window.location.href = "index.php";
-                    },1000);    
-                </script>
-                <?php
-                    
-            }elseif($email == ""){
-                ?>
-                <script>
-                        setTimeout(function(){
-                        alert("Prosze wprowadzić email");
-                        window.location.href = "index.php";
-                        },1000);  
-
-                </script>
-                <?php
-                    
+                echo 'blank_password';
+            }elseif($password2 == ""){
+                echo'blank_password';
+            }
+            elseif($email == ""){
+                echo 'blank_email';
             }
             else{
                 if($password == $password2){
                     $userInsertQuery = "INSERT INTO users (login, password, email, username) Values('$login','$password','$email', '$username')";
                     $result = mysqli_query($conn, $userInsertQuery);
-                    ?>
-                    <script>
-                        setTimeout(function(){
-                        alert("Sukces! Teraz możesz się zalogować!");
-                        window.location.href = "index.php";
-                        },1000);
-                    </script>
-                    <?php
+                    echo 'success';
+                }elseif($password != $password2){
+                    echo 'passwords_not_same';
                 }else{
-                    ?>
-                    <script>
-                        setTimeout(function(){
-                        alert("Podane hasła nie są takie same!");
-                        window.location.href = "index.php";
-                        },1000);
-                    </script>
-                    <?php
-                        
+                    echo 'error';
                 }
             }
             mysqli_close($conn);
