@@ -19,27 +19,29 @@
             </div>
             <br>
             <!-- lista użytkowników -->
-            
-                <?php
-                
-                    include'connect.php';
-                    $conn = @mysqli_connect($host, $db_user, $db_password, $db_name);
-                    $query = "SELECT * FROM users";
-                    $result = mysqli_query($conn, $query);
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                <div class="user_list_mother">
+                    <?php
+                        
+                        include'connect.php';
+                        $conn = @mysqli_connect($host, $db_user, $db_password, $db_name);
+                        $query = "SELECT * FROM users";
+                        $result = mysqli_query($conn, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
 
-                            echo "<a style='text-decoration: none; color: black' href='main.php?recipient_id=" . $row['id'] . "'>";
-                                echo '<div class = "user_list" data-user-id="' . $row['id'] . '">';
-                                    echo '<img src="' . $row['avatar_path'] . '" class = "mini_avatar"/>';
-                                    echo '<p>' . $row['username'] . '</p>';
-                                echo '</div>';
-                            echo "</a>";
+                                echo "<a style='text-decoration: none; color: black' href='main.php?recipient_id=" . $row['id'] . "'>";
+                                    echo '<div class = "user_list" data-user-id="' . $row['id'] . '">';
+                                        echo '<img src="' . $row['avatar_path'] . '" class = "mini_avatar"/>';
+                                        echo '<p>' . $row['username'] . '</p>';
+                                    echo '</div>';
+                                echo "</a>";
 
 
+                            }
                         }
-                    }
-                ?>
+                    ?>
+                </div>
+
             
         </div>
         <div class="middle_container">             

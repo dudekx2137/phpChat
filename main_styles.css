@@ -14,7 +14,7 @@ body{
 .left_container{
     padding: 10px;
     background-color:   #ffd966;
-    
+    max-height: 90vh;
     border-radius: 25px;
     flex-basis: 25%;
     box-shadow: 0 0 10px 2px rgba(30, 0, 0, 0.67);
@@ -67,6 +67,11 @@ body{
                 outline: none;
             box-shadow: 0 0 2px 2px rgba(255, 217, 102, 0.8);
             }
+            .user_list_mother{
+                height: calc(90% - 40px);
+                overflow-y: scroll; 
+                      
+            }
             .user_list{
                     margin-top: 4px;
                     display: flex;
@@ -78,6 +83,8 @@ body{
                     -moz-transition: background-color 1.25s ease-out;
                     -o-transition: background-color 1.25s ease-out;
                     transition: background-color 1.25s ease-out;
+                    
+                    
             }
             .highlighted {
                 background-color: #151922;

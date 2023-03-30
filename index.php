@@ -55,7 +55,13 @@
         <div id="login_error"></div>
         <div id="register_error"></div>
     </div>
-
+    <?php
+        session_start();
+        if(isset($_SESSION['username']) && isset($_SESSION['password'])){
+            header('Location: main.php');
+            exit();
+        }
+    ?>
 
     <script>
         document.getElementById("loginButton").addEventListener("click", function() {
@@ -133,12 +139,6 @@
             xhr.send(form_data);
           }
     </script>
-    <?php
-        
-        session_start();
-        if(isset($_SESSION['username']) && isset($_SESSION['password'])){
-            header('Location: main.php');   
-        }
-    ?>
+
 </body>
 </html>
