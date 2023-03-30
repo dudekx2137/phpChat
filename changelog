@@ -3,6 +3,7 @@ added is_user_logged.php that will check if user is logged, and if its not it wi
 ok, so login and register form works fine, time for further steps
 ok, for now simple chat is done,
 i've edited login page
+added some ajax to login site 
 
  
  
