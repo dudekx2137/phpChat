@@ -26,7 +26,8 @@
                                 <input type="password" placeholder="Password" name = "password"><br>
                             </label><br>
                             <button type="button" class="loginButton" onclick="submitLogin()">Submit</button><br><br>  
-                            
+                            <input type="hidden" name="username2" value="">
+                            <input type="hidden" name="id" value="">
                         </form>
                     <!--register formula-->
                     <form id = "register_form" method="post" style="display: none;">
@@ -45,6 +46,7 @@
                             <label class="test">Email:<br>
                                 <input type="email" placeholder="Email" name = "email" id="email"><br><br>
                             </label>
+
                             <button type="button" class="loginButton" onclick = "submitRegister()">Submit</button><br><br>
                     </form>
                 </div>
@@ -92,14 +94,17 @@
                 if(xhr.status == 200){//jesli zadanie zostalo zrealizowane pomyslnie
                     var response = xhr.responseText;
                     if(response == "success"){
+                        
                         window.location.href = "main.php";
                     }else{
                         
                         document.getElementById("login_error").innerHTML = "<p>Podałeś zły login bądź hasło!</p>"
                     }
+                    console.log(response);
                 }
             };
             xhr.send(form_data);
+            
           }
           function submitRegister(){
             var email_input = document.getElementById("email");

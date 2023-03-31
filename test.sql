@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 29 Mar 2023, 10:00
--- Wersja serwera: 10.4.25-MariaDB
--- Wersja PHP: 8.1.10
+-- Czas generowania: 01 Kwi 2023, 00:48
+-- Wersja serwera: 10.1.38-MariaDB
+-- Wersja PHP: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -33,11 +34,6 @@ CREATE TABLE `conversations` (
   `user2_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Zrzut danych tabeli `conversations`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -50,10 +46,8 @@ CREATE TABLE `messages` (
   `sender_id` int(11) NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 
 -- --------------------------------------------------------
 
@@ -67,11 +61,12 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `avatar_path` varchar(255) DEFAULT NULL
+  `avatar_path` varchar(255) NOT NULL DEFAULT 'avatars/0.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-
+--
+-- Indeksy dla zrzutów tabel
+--
 
 --
 -- Indeksy dla tabeli `conversations`
@@ -97,26 +92,26 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT dla zrzuconych tabel
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
 -- AUTO_INCREMENT dla tabeli `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- AUTO_INCREMENT dla tabeli `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=278;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=299;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Ograniczenia dla zrzutów tabel

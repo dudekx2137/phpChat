@@ -14,17 +14,15 @@
         $id = $_POST['id'];
         $queryCheck = "SELECT * FROM users WHERE login = '$login' and password = '$password'";
         $result = mysqli_query($conn, $queryCheck);
-        $row = mysqli_fetch_assoc($result);
-        if($row['login'] == $login && $row['password'] == $password){
+        if(mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
             session_start(); 
+            echo 'success';
             $_SESSION['username'] = $row['login'];
             $_SESSION['password'] = $row['password'];
             $_SESSION['username2'] = $row['username'];
             $_SESSION['id'] = $row['id'];
-            echo 'success';
-            
-
-        }else{
+        } else {
             echo 'error';
         }
     }

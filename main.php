@@ -13,10 +13,9 @@
             <?php  
                 include'is_user_logged.php';
             ?>
-            <div class="search-container">
-                <input type="text" placeholder="Wyszukaj użytkownika...">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </div>
+    <div class="search-container">
+        <input class="search-input" type="text" placeholder="Wyszukaj użytkownika...">
+    </div>
             <br>
             <!-- lista użytkowników -->
                 <div class="user_list_mother">
@@ -194,7 +193,7 @@
         </div>
     </div>
     <div class="footer">
-        <!--<p class="footertext">Site made by dudek</p>-->
+        <p class="footertext">Site made by dudek</p
     </div>
     <script>
             //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
@@ -258,6 +257,24 @@
                 });
             }
 
+            //sortowanie uzytkownikow w left cointainerze
+            const searchInput = document.querySelector('.search-container input');
+            const userList = document.querySelector('.user_list_mother');
+            searchInput.addEventListener('input', (e) => {
+                const searchString = e.target.value.toLowerCase();
+
+                const filteredUsers = Array.from(userList.children).filter((user) =>
+                    user.querySelector('p').textContent.toLowerCase().includes(searchString)
+                );
+
+                Array.from(userList.children).forEach((user) => {
+                    if (!filteredUsers.includes(user)) {
+                        user.style.display = 'none';
+                    } else {
+                        user.style.display = 'block';
+                    }
+                });
+            });
     </script>
 
 </body>
