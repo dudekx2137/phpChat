@@ -207,7 +207,7 @@
         </div>
     </div>
     <div class="footer">
-        <p class="footertext"></p>
+        <p class="footertext">site made by ddutkowski</p>
     </div>
     <script>
             //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
