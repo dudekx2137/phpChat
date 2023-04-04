@@ -65,14 +65,26 @@ body{
             }
             .search-container button[type"submit"]:focus  {
                 outline: none;
-            box-shadow: 0 0 2px 2px rgba(255, 217, 102, 0.8);
+                box-shadow:  0 0 2px 2px rgba(255, 217, 102, 0.8);
             }
             .user_list_mother{
                 height: calc(90% - 40px);
                 overflow-y: scroll; 
                       
             }
-            .user_list{
+                .user_list_mother::-webkit-scrollbar {
+                    width: 8px;
+                }
+                
+                .user_list_mother::-webkit-scrollbar-track {
+                    background-color: #f1f1f1;
+                }
+                
+                .user_list_mother::-webkit-scrollbar-thumb {
+                    background-color: #151922;
+                    border-radius: 10px;
+                }
+                .user_list{
                     margin-top: 4px;
                     display: flex;
                     align-items: center;
@@ -115,56 +127,72 @@ body{
     
     max-height: 90vh;
 }
-            #messages-container {
-                border-top: 2px solid black;
-                height: calc(100% - 40px);
-                overflow-y: scroll;
-                padding-top: 10px;
-            }
-            textarea {
-                border-radius: 5px;
-                resize: none;
-                height: 50px;
-                width: 100%;
-                box-sizing: border-box;
-                border: none;
-                border-top: 1px solid #ccc;
-                padding: 10px;
-                font-size: 16px;
-              }
-              .send_button {
-                height: 50px;
-                width: 100%;
-                background-color: #ffd966;
-                color: #151922;
-                border: none;
-                cursor: pointer;
-                font-size: 16px;
-                border-radius: 5px;
-              }
-              
-              .send_button:hover {
-                background-color: #ffa500 ;
-              }
-              .message {
-                clear: both;
-                display: table;
-                width: 100%;
-                margin-bottom: 10px;
-                border-radius: 20px;
-              }
-              
-              .sent {
-                background-color: #ffd966;
-                float: right;
-                width: 40%;
-              }
-              
-              .recedived {
-                background-color: #f2f2f2;
-                float: left;
-                width: 40%;
-              }
+                #messages-container {
+                    border-top: 2px solid black;
+                    height: calc(100% - 40px);
+                    overflow-y: scroll;
+                    padding-top: 10px;
+                }
+                        #messages-container::-webkit-scrollbar {
+                            width: 8px;
+                        }
+                        
+                        #messages-container::-webkit-scrollbar-track {
+                            background-color: #f1f1f1;
+                        }
+                        
+                        #messages-container::-webkit-scrollbar-thumb {
+                            background-color: #151922;
+                            border-radius: 10px;
+                        }
+                textarea {
+                    border-radius: 5px;
+                    resize: none;
+                    height: 50px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    border: none;
+                    border-top: 1px solid #ccc;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+                .send_button {
+                    height: 50px;
+                    width: 100%;
+                    background-color: #ffd966;
+                    color: #151922;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 16px;
+                    border-radius: 5px;
+                }
+                
+                .send_button:hover {
+                    background-color: #ffa500 ;
+                }
+                .message {
+                    clear: both;
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 10px 20px 10px 10px;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-radius: 20px;
+                  }
+                  
+                  .sent {
+                    background-color: #ffd966;
+                    width: 40%;
+                    float: right;
+                    max-width: 40%;
+                  }
+                  
+                  .recedived {
+                    float: left;
+                    background-color: #f2f2f2;
+                    width: 40%;
+                    max-width: 40%;
+                  }
               .minimini_avatar{
                     border-radius: 50%;
                 width: 50px;
@@ -172,7 +200,7 @@ body{
                 object-fit: cover;
                 object-position: 50% 50%;
               }
-                
+
 .right_container{
     padding: 10px;
     background-color: #ffd966  ;

@@ -80,12 +80,10 @@
                                 $avatar_path = mysqli_fetch_assoc(mysqli_query($conn, "SELECT avatar_path FROM users WHERE id = $row[sender_id]"))['avatar_path'];
                                 $avatar_path2 = mysqli_fetch_assoc(mysqli_query($conn, "SELECT avatar_path FROM users WHERE id = $recipient_id "))['avatar_path'];
                                 if ($row['sender_id'] == $_SESSION['id']) {
-                                    
-                                    echo '<div class="message sent" style="display: flex; align-items: center;"><img src="' . $avatar_path . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
+                                    echo '<div class="message sent" style="display: flex; align-items: center; max-width:40%;"><img src="' . $avatar_path . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0; word-wrap: break-word;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
                                 } else {
-                                    echo '<div class="message recedived" style="display: flex; align-items: center;"><img src="' . $avatar_path2 . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
+                                    echo '<div class="message recedived" style="display: flex; align-items: center; max-width:40%;"><img src="' . $avatar_path2 . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0; word-wrap: break-word;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
                                 }
-                                
                             } 
                         } else {
                             echo "<p>Start new conversation.</p>";
@@ -98,7 +96,7 @@
                 <div class="tareadiv">
                     <form method="post" action="">
                         <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
-                        <textarea name="message" required></textarea>
+                        <textarea name="message" required placeholder = "Write a message."></textarea>
                         <button type="submit" name="send" class="send_button">Send  </button>
                     </form>
                 </div>
