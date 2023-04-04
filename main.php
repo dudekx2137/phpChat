@@ -14,7 +14,7 @@
                 include'is_user_logged.php';
             ?>
     <div class="search-container">
-        <input class="search-input" type="text" placeholder="Wyszukaj użytkownika...">
+        <input class="search-input" type="text" placeholder="Search user...">
     </div>
             <br>
             <!-- lista użytkowników -->
@@ -54,9 +54,9 @@
             }
             // naglowek z info o rozmowcy
             if (isset($recipient)) {
-                echo "<h2 class = 'nameOfActualConversation'>Rozmowa z " . $recipient['username'] . "</h2>";
+                echo "<h2 class = 'nameOfActualConversation'>Conversation with: " . $recipient['username'] . "</h2>";
             } else {
-                echo "<h2>Wybierz uzytkownika, z ktorym chcesz rozpoczac konwersacje</h2>";
+                echo "<h2>Select user</h2>";
             }
             ?>
             <!-- Wyświetlanie wiadomości -->
@@ -70,13 +70,25 @@
                         WHERE (messages.sender_id = ".$_SESSION['id']." AND messages.receiver_id = $recipient_id) 
                         OR (messages.sender_id = $recipient_id AND messages.receiver_id = ".$_SESSION['id'].") 
                         ORDER BY messages.created_at ASC;";
-                        $result = mysqli_query($conn, $query);
+                        $result = mysqli_query($conn, $query);     
                         if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<p><strong>" .$row["sent_time"] . " " . $row["sender_name"] . ":</strong> " . $row["message"] . "</p>";
-                        } 
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $sender_id = $row['sender_id'];
+                                $sender_name = $row['sender_name'];
+                                $message = $row['message'];
+                                $hrs = $row['sent_time'];
+                                $avatar_path = mysqli_fetch_assoc(mysqli_query($conn, "SELECT avatar_path FROM users WHERE id = $row[sender_id]"))['avatar_path'];
+                                $avatar_path2 = mysqli_fetch_assoc(mysqli_query($conn, "SELECT avatar_path FROM users WHERE id = $recipient_id "))['avatar_path'];
+                                if ($row['sender_id'] == $_SESSION['id']) {
+                                    
+                                    echo '<div class="message sent" style="display: flex; align-items: center;"><img src="' . $avatar_path . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
+                                } else {
+                                    echo '<div class="message recedived" style="display: flex; align-items: center;"><img src="' . $avatar_path2 . '" class="minimini_avatar" style="margin-right: 10px;"><p style="margin: 0;"><strong>'. $hrs . " " . $sender_name . ':</strong> ' . $message . '</p></div>';
+                                }
+                                
+                            } 
                         } else {
-                            echo "<p>Rozpocznij nową konwersację.</p>";
+                            echo "<p>Start new conversation.</p>";
                         }
                     }
                 ?>
@@ -87,7 +99,7 @@
                     <form method="post" action="">
                         <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
                         <textarea name="message" required></textarea>
-                        <button type="submit" name="send" class="send_button">Wyślij</button>
+                        <button type="submit" name="send" class="send_button">Send  </button>
                     </form>
                 </div>
             <?php } ?>
@@ -115,7 +127,11 @@
                                     VALUES ( $conversation_id, $sender_id, $recipient_id, '$message', NOW())";
                             $result3 = mysqli_query($conn, $query3);
                             if ($result3) {
-                                header("Refresh:0");
+                                ob_start();
+                                header('Refresh:0');
+                                ob_end_flush();
+
+                                
                             } else {
                                 echo "<p>Błąd podczas wysyłania wiadomości.</p>";
                             }
@@ -155,7 +171,7 @@
                     }
                 }
                 //pobranie sciezki do pliku z bazy
-                echo "<h2 class = 'welcome'>Witaj " . $_SESSION['username2'] . "</h2>"; 
+                echo "<h2 class = 'welcome'>Hello " . $_SESSION['username2'] . "</h2>"; 
                 $stmt = $conn->prepare("SELECT avatar_path FROM users WHERE id = ?");
                 $stmt->bind_param('i', $user_id);
                 $stmt->execute();
@@ -177,7 +193,7 @@
                         echo '</form>';
                     
             ?>
-            <button class = "show_avatar_buttons" onclick = "showbutt()">Zmien awatar</button>
+            <button class = "show_avatar_buttons" onclick = "showbutt()" id = "logoutButton">Change avatar</button><br>
             <?php
 
             
@@ -189,11 +205,11 @@
                     <button type="submit" id="logoutButton" class="button5">Logout</button>
                 </form>
             </div>
-            <h2>tu dac cos o aktualnie zalogowanym uzytkowniku</h2>
+            
         </div>
     </div>
     <div class="footer">
-        <p class="footertext">Site made by dudek</p
+        <p class="footertext"></p>
     </div>
     <script>
             //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika

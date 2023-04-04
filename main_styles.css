@@ -116,9 +116,10 @@ body{
     max-height: 90vh;
 }
             #messages-container {
-                
+                border-top: 2px solid black;
                 height: calc(100% - 40px);
                 overflow-y: scroll;
+                padding-top: 10px;
             }
             textarea {
                 border-radius: 5px;
@@ -145,7 +146,33 @@ body{
               .send_button:hover {
                 background-color: #ffa500 ;
               }
-
+              .message {
+                clear: both;
+                display: table;
+                width: 100%;
+                margin-bottom: 10px;
+                border-radius: 20px;
+              }
+              
+              .sent {
+                background-color: #ffd966;
+                float: right;
+                width: 40%;
+              }
+              
+              .recedived {
+                background-color: #f2f2f2;
+                float: left;
+                width: 40%;
+              }
+              .minimini_avatar{
+                    border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                object-position: 50% 50%;
+              }
+                
 .right_container{
     padding: 10px;
     background-color: #ffd966  ;
@@ -159,6 +186,7 @@ body{
     box-shadow: 0 0 10px 2px rgba(30, 0, 0, 0.67);
 }
             .welcome{
+                margin-top: -10%;
                 text-align: center;
                 font-size: 23px;
                 
@@ -175,6 +203,19 @@ body{
             .avatarbutton{
                 margin-top: auto;
                 display:none;
+                
+            }
+            #logoutButton{
+                cursor: pointer;
+                border:1px solid transparent;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.42;
+                color:white;
+                border-radius: 4px;
+                background-color: #1a73e8;
+                outline: none;
+                min-width: 88px;
             }
 .footer{
     text-align: center;
