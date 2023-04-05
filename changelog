@@ -5,6 +5,7 @@ ok, for now simple chat is done,
 i've edited login page
 added user searching in left container
 now when every user has a default avatar(0.jpg in avatars dir)
+now im trying to make a social media like site, but idk if i'll need to make another site to do that cuz sometimes after sending message 2 containers dissapear(xD) and i think thats becouse of some js code that sets display: none; or display: flex; for those divs, need to check that
  
  
 todo: 
