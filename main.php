@@ -10,12 +10,14 @@
 <body>
     <div class="main_container">
         <div class = "left_container">
+            
             <?php  
                 include'is_user_logged.php';
             ?>
-    <div class="search-container">
-        <input class="search-input" type="text" placeholder="Search user...">
-    </div>
+            <div class="search-container">
+                <input class="search-input" type="text" placeholder="Search user...">
+                
+            </div>
             <br>
             <!-- lista użytkowników -->
                 <div class="user_list_mother">
@@ -91,19 +93,20 @@
                     }
                 ?>
             </div>
+            
             <!-- Formularz do wysyłania wiadomości -->
             <?php if (isset($_GET['recipient_id'])) { ?>
                 <div class="tareadiv">
                     <form method="post" action="">
                         <input type="hidden" name="recipient_id" value="<?php echo $recipient_id; ?>">
-                        <textarea name="message" required placeholder = "Write a message."></textarea>
-                        <button type="submit" name="send" class="send_button">Send  </button>
+                        <textarea name="message" required placeholder = "Write a message." id = "message_input"></textarea>
+                        <button type="submit" name="send" class="send_button" id ="send_button">Send  </button>
                     </form>
                 </div>
             <?php } ?>
-
             <?php
 // Obsługa wysyłania wiadomości
+
                     if (isset($_POST['send'])) {
                         $recipient_id = mysqli_real_escape_string($conn, $_POST['recipient_id']);
                         $message = mysqli_real_escape_string($conn, $_POST['message']);
@@ -125,22 +128,23 @@
                                     VALUES ( $conversation_id, $sender_id, $recipient_id, '$message', NOW())";
                             $result3 = mysqli_query($conn, $query3);
                             if ($result3) {
-                                ob_start();
-                                header('Refresh:0');
-                                ob_end_flush();
-
-                                
+                                // Zresetuj wartość textarea
+                                $message = '';
+                                // Przekieruj użytkownika na stronę główną
+                                header('Location: main.php?recipient_id=' . $recipient_id);
+                                exit;
                             } else {
                                 echo "<p>Błąd podczas wysyłania wiadomości.</p>";
                             }
                         }
-                    }
-                
+                       
+                    }  
             ?>
         </div>
         <div class="right_container">
+            <a href="#" class="close"></a>
             <?php
-                
+ 
                  //Dodawanie/wyswietlanie avataru uzytkownika
                  //id zalogowanego uzytkownika
                 $user_id = $_SESSION['id'];
@@ -170,6 +174,7 @@
                 }
                 //pobranie sciezki do pliku z bazy
                 echo "<h2 class = 'welcome'>Hello " . $_SESSION['username2'] . "</h2>"; 
+                
                 $stmt = $conn->prepare("SELECT avatar_path FROM users WHERE id = ?");
                 $stmt->bind_param('i', $user_id);
                 $stmt->execute();
@@ -205,34 +210,44 @@
             </div>
             
         </div>
+        <div class="main_section">
+            <div class="search-container2">
+                <input class="search-input2" type="text" placeholder="Search posts, users, etc...">
+                
+            </div>
+            <h2>IN PROGRESS, FOR NOW U CAN START CHATTING WITH USERS IN THE LEFT SIDE OF SITE</h2>
+        </div>
     </div>
+
     <div class="footer">
         <p class="footertext">site made by ddutkowski</p>
     </div>
     <script>
-            //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
-            const fileInput = document.querySelector('input[type="file"]');
-            const submitButton = document.getElementById('submit-button');
-            fileInput.addEventListener('change', () => {
-            submitButton.removeAttribute('disabled');
-            });
-            //pokazywanie/ukrywanie przyciskow do zmieniania badz dodawania avatara
-            function showbutt() {
-                var buttons = document.getElementsByClassName("avatarbutton");
-                for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].style.display = "block";
-                }
-            }
-            function hidebutt(){
-                var buttons = document.getElementsByclassName("avatarbutton");
-                for(var i = 0; i < buttons.length; i++){
-                    buttons[i].style.display = "none";
-                }
-            }
-            //zmiana koloru aktualnie wybranego usera
+            //sortowanie uzytkownikow w left cointainerze
+            const searchInput = document.querySelector('.search-container input');
+            const userList = document.querySelector('.user_list_mother');
+            searchInput.addEventListener('input', (e) => {
+                const searchString = e.target.value.toLowerCase();
+
+                const filteredUsers = Array.from(userList.children).filter((user) =>
+                    user.querySelector('p').textContent.toLowerCase().includes(searchString)
+                );
+
+                Array.from(userList.children).forEach((user) => {
+                    if (!filteredUsers.includes(user)) {
+                        user.style.display = 'none';
+                    } else {
+                        user.style.display = 'block';
+                    }
+                });
+            });           
+
+            //zmiana koloru aktualnie wybranego usera oraz chowanie/pokazywanie divow
             const urlParam = new URLSearchParams(window.location.search);
             const recipientId = urlParam.get('recipient_id');
-
+            const mainSection = document.querySelector('.main_section');
+            const middleSection = document.querySelector('.middle_container');
+            const rightSection = document.querySelector('.right_container');
             const selectedUsers = document.querySelectorAll('.user_list');
 
             for(let i = 0; i < selectedUsers.length; i++){
@@ -242,6 +257,9 @@
                 if(recipientId && userId == recipientId){
                     selectedUser.style.backgroundColor = "#151922";
                     selectedUser.style.color = "white";
+                    mainSection.style.display = "none";
+                    middleSection.style.display = "flex";
+                    rightSection.style.display = "flex";
                 } else if(selectedUser.classList.contains('hovered')){
                     selectedUser.style.backgroundColor = "#151922";
                     selectedUser.style.color = "white";
@@ -271,24 +289,46 @@
                 });
             }
 
-            //sortowanie uzytkownikow w left cointainerze
-            const searchInput = document.querySelector('.search-container input');
-            const userList = document.querySelector('.user_list_mother');
-            searchInput.addEventListener('input', (e) => {
-                const searchString = e.target.value.toLowerCase();
+            //nacisniecie esc
+            document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                const mainSection = document.querySelector('.main_section');
+                const middleSection = document.querySelector('.middle_container');
+                const rightSection = document.querySelector('.right_container');
+                mainSection.style.display = "flex";
+                middleSection.style.display = "none";
+                rightSection.style.display = "none";
+                window.location.href = `main.php`;
+                }
+            })
 
-                const filteredUsers = Array.from(userList.children).filter((user) =>
-                    user.querySelector('p').textContent.toLowerCase().includes(searchString)
-                );
 
-                Array.from(userList.children).forEach((user) => {
-                    if (!filteredUsers.includes(user)) {
-                        user.style.display = 'none';
-                    } else {
-                        user.style.display = 'block';
-                    }
-                });
+            const showMainBtn = document.querySelector('.close');
+            showMainBtn.addEventListener('click', () => {
+                mainSection.style.display = 'flex';
+                middleSection.style.display = 'none';
+                rightSection.style.display = 'none';
+                window.location.href = `main.php`;
             });
+            //zablokowanie przysicku submit, do momentu wprowadzenia pliku przez uzytkownika
+            const fileInput = document.querySelector('input[type="file"]');
+            const submitButton = document.getElementById('submit-button');
+            fileInput.addEventListener('change', () => {
+                submitButton.removeAttribute('disabled');
+            });
+            //pokazywanie/ukrywanie przyciskow do zmieniania badz dodawania avatara
+            function showbutt() {
+                var buttons = document.getElementsByClassName("avatarbutton");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].style.display = "block";
+                }
+            }
+            function hidebutt(){
+                var buttons = document.getElementsByclassName("avatarbutton");
+                for(var i = 0; i < buttons.length; i++){
+                    buttons[i].style.display = "none";
+                }
+            }
     </script>
 
 </body>
